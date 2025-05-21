@@ -10,7 +10,7 @@ public class Authors {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id")
-    private Long id;
+    private Long authorId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -31,8 +31,8 @@ public class Authors {
     public Authors() {}
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() { return authorId; }
+    public void setId(Long authorId) { this.authorId = authorId; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

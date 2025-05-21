@@ -4,7 +4,6 @@ import com.example.library_system.Entity.Books;
 import com.example.library_system.Entity.Loans;
 import com.example.library_system.Repository.LoanRepository;
 import com.example.library_system.Service.LoanService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.library_system.Repository.UserRepository;
 import com.example.library_system.Entity.Users;
@@ -32,7 +31,7 @@ public class LoanServiceIMPL implements LoanService {
     }
 
     @Override
-    public Loans loanBook(Long userId, Long bookId) {
+    public Loans createLoan(Long userId, Long bookId) {
         Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -42,21 +41,20 @@ public class LoanServiceIMPL implements LoanService {
         if (book.getAvailableCopies() <= 0) {
             throw new RuntimeException("No copies available for loan");
         }
-
-        // Decrease available copies
         book.setAvailableCopies(book.getAvailableCopies() - 1);
-        bookRepository.save(book); // Save the updated book
+        bookRepository.save(book);
 
         Loans loan = new Loans();
         loan.setUser(user);
         loan.setBook(book);
+        loan.setReturnedDate(null);
         loan.setBorrowedDate(LocalDate.now());
         loan.setDueDate(LocalDate.now().plusDays(14));
 
         return loanRepository.save(loan);
     }
     @Override
-    public Loans returnBook(Long loanId) {
+    public Loans returnLoan(Long loanId) {
         Loans loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new RuntimeException("Loan not found"));
 
@@ -66,11 +64,27 @@ public class LoanServiceIMPL implements LoanService {
 
         loan.setReturnedDate(LocalDate.now());
 
-        // Increase availableCopies
         Books book = loan.getBook();
         book.setAvailableCopies(book.getAvailableCopies() + 1);
         bookRepository.save(book);
 
+        return loanRepository.save(loan);
+    }
+    @Override
+    public Loans extendLoan(Long loanId){
+        Loans loan = loanRepository.findByLoanId(loanId)
+                .orElseThrow(() -> new RuntimeException("Loan not found"));
+
+        if (loan.getReturnedDate() != null) {
+            throw new RuntimeException("Cannot extend a returned loan");
+        }
+
+        // If already extended
+        if (loan.getDueDate().isAfter(loan.getBorrowedDate().plusDays(14))) {
+            throw new RuntimeException("Loan has already been extended once");
+        }
+
+        loan.setDueDate(loan.getDueDate().plusDays(7));
         return loanRepository.save(loan);
     }
 

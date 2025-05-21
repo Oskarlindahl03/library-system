@@ -6,11 +6,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "loans")
-public class Loans{
+public class Loans {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loan_id")
-    private Long id;
+    private Long loanId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,8 +34,8 @@ public class Loans{
     public Loans () {}
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() { return loanId; }
+    public void setId(Long loanId) { this.loanId = loanId; }
 
     public Users getUser() { return user; }
     public void setUser(Users user) { this.user = user; }

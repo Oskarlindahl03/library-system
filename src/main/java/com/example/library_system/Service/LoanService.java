@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface LoanService {
     List<Loans> getLoansByUserId(Long userId);
-    Loans loanBook(Long userId, Long bookId);
-    Loans returnBook(Long loanId);
+    Loans createLoan(Long userId, Long bookId);
+    Loans returnLoan(Long loanId);
+    Loans extendLoan(Long loanId);
 }

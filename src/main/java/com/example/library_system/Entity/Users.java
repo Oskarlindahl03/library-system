@@ -11,7 +11,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Long userId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -26,7 +26,7 @@ public class Users {
     private String password;
 
     @Column(name = "registration_date")
-    private LocalDate registrationDate;
+    private LocalDate registrationDate = LocalDate.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -35,8 +35,8 @@ public class Users {
     public Users() {}
 
     // Getters and Setters (camelCase)
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() { return userId; }
+    public void setId(Long userId) { this.userId = userId; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

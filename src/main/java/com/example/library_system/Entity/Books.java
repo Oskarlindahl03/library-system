@@ -1,16 +1,19 @@
 package com.example.library_system.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
 @Table(name = "books")
 public class Books {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private Long id;
+    private Long bookId;
 
     @Column(name = "title")
     private String title;
@@ -30,29 +33,65 @@ public class Books {
     private Authors author;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Loans> loans;
 
     public Books() {}
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return bookId;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setId(Long bookId) {
+        this.bookId = bookId;
+    }
 
-    public Integer getPublicationYear() { return publicationYear; }
-    public void setPublicationYear(Integer publicationYear) { this.publicationYear = publicationYear; }
+    public String getTitle() {
+        return title;
+    }
 
-    public Integer getAvailableCopies() { return availableCopies; }
-    public void setAvailableCopies(Integer availableCopies) { this.availableCopies = availableCopies; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public Integer getTotalCopies() { return totalCopies; }
-    public void setTotalCopies(Integer totalCopies) { this.totalCopies = totalCopies; }
+    public Integer getPublicationYear() {
+        return publicationYear;
+    }
 
-    public Authors getAuthor() { return author; }
-    public void setAuthor(Authors author) { this.author = author; }
+    public void setPublicationYear(Integer publicationYear) {
+        this.publicationYear = publicationYear;
+    }
 
-    public List<Loans> getLoans() { return loans; }
-    public void setLoans(List<Loans> loans) { this.loans = loans; }
+    public Integer getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public void setAvailableCopies(Integer availableCopies) {
+        this.availableCopies = availableCopies;
+    }
+
+    public Integer getTotalCopies() {
+        return totalCopies;
+    }
+
+    public void setTotalCopies(Integer totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
+    public Authors getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Authors author) {
+        this.author = author;
+    }
+
+    public List<Loans> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loans> loans) {
+        this.loans = loans;
+    }
 }
