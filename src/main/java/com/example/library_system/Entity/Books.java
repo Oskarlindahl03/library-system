@@ -29,21 +29,21 @@ public class Books {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    @JsonBackReference
+    @JsonBackReference("author-book")
     private Authors author;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("book-loan")
     private List<Loans> loans;
 
     public Books() {}
 
     // Getters and Setters
-    public Long getId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setId(Long bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 

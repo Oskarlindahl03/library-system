@@ -1,4 +1,4 @@
-package com.example.library_system.Service;
+package com.example.library_system.Service.ServiceInterface;
 
 import com.example.library_system.Entity.Loans;
 import java.util.List;

@@ -2,7 +2,7 @@ package com.example.library_system.Controller.Loan;
 
 import com.example.library_system.Dto.LoanRequest;
 import com.example.library_system.Entity.Loans;
-import com.example.library_system.Service.LoanService;
+import com.example.library_system.Service.ServiceInterface.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

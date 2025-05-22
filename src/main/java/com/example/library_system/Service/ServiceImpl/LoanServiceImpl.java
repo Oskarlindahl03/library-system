@@ -1,9 +1,9 @@
-package com.example.library_system.Service.ServiceIMPL;
+package com.example.library_system.Service.ServiceImpl;
 
 import com.example.library_system.Entity.Books;
 import com.example.library_system.Entity.Loans;
 import com.example.library_system.Repository.LoanRepository;
-import com.example.library_system.Service.LoanService;
+import com.example.library_system.Service.ServiceInterface.LoanService;
 import org.springframework.stereotype.Service;
 import com.example.library_system.Repository.UserRepository;
 import com.example.library_system.Entity.Users;
@@ -13,13 +13,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class LoanServiceIMPL implements LoanService {
+public class LoanServiceImpl implements LoanService {
 
     private final LoanRepository loanRepository;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
 
-    public LoanServiceIMPL(LoanRepository loanRepository, UserRepository userRepository, BookRepository bookRepository) {
+    public LoanServiceImpl(LoanRepository loanRepository, UserRepository userRepository, BookRepository bookRepository) {
         this.loanRepository = loanRepository;
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
@@ -27,7 +27,7 @@ public class LoanServiceIMPL implements LoanService {
 
     @Override
     public List<Loans> getLoansByUserId(Long userId) {
-        return loanRepository.findByUserId(userId);
+        return loanRepository.findByUserUserId(userId);
     }
 
     @Override

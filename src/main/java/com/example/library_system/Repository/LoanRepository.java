@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LoanRepository extends JpaRepository<Loans, Long> {
-    List<Loans> findByUserId(Long userId);
-    List<Loans> findByUserIdAndBookId(Long userId, Long bookId);
+    List<Loans> findByUserUserId(Long userId);
     Optional<Loans> findByLoanId(Long loanId);
+    List<Loans> findByUserUserIdAndBookBookId(Long userId, Long bookId);
 
 }
 

@@ -29,14 +29,14 @@ public class Users {
     private LocalDate registrationDate = LocalDate.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-loan")
     private List<Loans> loans;
 
     public Users() {}
 
     // Getters and Setters (camelCase)
-    public Long getId() { return userId; }
-    public void setId(Long userId) { this.userId = userId; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

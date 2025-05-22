@@ -1,7 +1,7 @@
 package com.example.library_system.Controller.Book;
 
 import com.example.library_system.Entity.Books;
-import com.example.library_system.Service.BookService;
+import com.example.library_system.Service.ServiceInterface.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

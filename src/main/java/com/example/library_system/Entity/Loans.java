@@ -14,12 +14,12 @@ public class Loans {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference("user-loan")
     private Users user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonBackReference
+    @JsonBackReference("book-loan")
     private Books book;
 
     @Column(name = "borrowed_date")
@@ -34,8 +34,8 @@ public class Loans {
     public Loans () {}
 
     // Getters and Setters
-    public Long getId() { return loanId; }
-    public void setId(Long loanId) { this.loanId = loanId; }
+    public Long getLoanId() { return loanId; }
+    public void setLoanId(Long loanId) { this.loanId = loanId; }
 
     public Users getUser() { return user; }
     public void setUser(Users user) { this.user = user; }

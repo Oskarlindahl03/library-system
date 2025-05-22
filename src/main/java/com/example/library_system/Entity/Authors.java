@@ -25,14 +25,14 @@ public class Authors {
     private String nationality;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("author-book")
     private List<Books> books;
 
     public Authors() {}
 
     // Getters and Setters
-    public Long getId() { return authorId; }
-    public void setId(Long authorId) { this.authorId = authorId; }
+    public Long getAuthorId() { return authorId; }
+    public void setAuthorId(Long authorId) { this.authorId = authorId; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
