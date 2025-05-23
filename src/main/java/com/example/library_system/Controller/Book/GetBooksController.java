@@ -16,7 +16,6 @@ public class GetBooksController {
     @Autowired
     private BookService bookService;
 
-    // This endpoint will be accessible at: GET /books/all
     @GetMapping("/all")
     public List<Books> getAllBooks() {
         return bookService.getAllBooks();
