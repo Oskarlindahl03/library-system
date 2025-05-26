@@ -1,12 +1,13 @@
 package com.example.library_system.Service;
 
+import com.example.library_system.Entity.Books;
 import com.example.library_system.Entity.Loans;
 import com.example.library_system.Entity.Users;
-import com.example.library_system.Entity.Books;
+import com.example.library_system.Repository.BookRepository;
 import com.example.library_system.Repository.LoanRepository;
 import com.example.library_system.Repository.UserRepository;
-import com.example.library_system.Repository.BookRepository;
 import com.example.library_system.Service.ServiceImpl.LoanServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,46 +19,50 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class LoanServiceTest {
+class LoanServiceTest {
 
     @Mock
     private LoanRepository loanRepository;
 
     @Mock
-    private UserRepository userRepository;
-
-    @Mock
     private BookRepository bookRepository;
 
-    @InjectMocks
-    private LoanServiceImpl loanService;
+    @Mock
+    private UserRepository userRepository;
 
-    public LoanServiceTest() {
+    @InjectMocks
+    private LoanServiceImpl loanService;  // ← this must be the concrete class
+
+    @BeforeEach
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testCreateLoan() {
-        Users user = new Users();
-        user.setUserId(1L);
-
+    void testCreateLoan() {
+        Long bookId = 1L;
+        Long userId = 1L;
         Books book = new Books();
-        book.setBookId(1L);
+        book.setBookId(bookId);
+        book.setAvailableCopies(5);
+
+        Users user = new Users();
+        user.setUserId(userId);
 
         Loans loan = new Loans();
-        loan.setUser(user);
         loan.setBook(book);
-        loan.setLoanDate(LocalDate.now());
+        loan.setUser(user);
+        loan.setBorrowedDate(LocalDate.now());
+        loan.setReturnedDate(LocalDate.now().plusDays(14));
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(loanRepository.save(any(Loans.class))).thenReturn(loan);
 
-        Loans result = loanService.createLoan(1L, 1L);
+        Loans createdLoan = loanService.createLoan(bookId, userId);
 
-        assertEquals(loan.getBook(), result.getBook());
-        assertEquals(loan.getUser(), result.getUser());
-
-        verify(loanRepository, times(1)).save(any(Loans.class));
+        assertEquals(user, createdLoan.getUser());
+        assertEquals(book, createdLoan.getBook());
+        verify(bookRepository).save(book);
     }
 }

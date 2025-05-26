@@ -4,6 +4,8 @@ import com.example.library_system.Dto.LoanRequest;
 import com.example.library_system.Entity.Loans;
 import com.example.library_system.Service.ServiceInterface.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,10 @@ public class PostLoansController {
     private LoanService loanService;
 
     @PostMapping
-    public Loans createLoan(@RequestBody LoanRequest request) {
-        return loanService.createLoan(request.getUserId(), request.getBookId());
+    public ResponseEntity<Loans> createLoan(@RequestBody LoanRequest request) {
+        Loans createdLoan = loanService.createLoan(request.getUserId(), request.getBookId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdLoan);
     }
+
+
 }
