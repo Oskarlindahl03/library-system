@@ -4,6 +4,7 @@ import com.example.library_system.Entity.Books;
 import com.example.library_system.Entity.Loans;
 import com.example.library_system.Repository.LoanRepository;
 import com.example.library_system.Service.ServiceInterface.LoanService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.example.library_system.Repository.UserRepository;
 import com.example.library_system.Entity.Users;
@@ -31,6 +32,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    @Transactional
     public Loans createLoan(Long userId, Long bookId) {
         Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -54,6 +56,7 @@ public class LoanServiceImpl implements LoanService {
         return loanRepository.save(loan);
     }
     @Override
+    @Transactional
     public Loans returnLoan(Long loanId) {
         Loans loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new RuntimeException("Loan not found"));

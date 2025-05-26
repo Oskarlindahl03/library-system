@@ -4,6 +4,8 @@ import com.example.library_system.Dto.BookWithLimitedDetailsDTO;
 import com.example.library_system.Entity.Books;
 import com.example.library_system.Service.ServiceInterface.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,18 +21,20 @@ public class GetBooksSearchController {
     private BookService bookService;
 
     @GetMapping("/search")
-    public List<Books> findByAuthorAuthorIdAndTitleContainingIgnoreCase(
+    public Page<Books> findByAuthorAuthorIdAndTitleContainingIgnoreCase(
             @RequestParam(required = false) Long authorId,
-            @RequestParam(required = false) String title) {
-        return bookService.findByAuthorAuthorIdAndTitleContainingIgnoreCase(authorId, title);
-    }
-    @GetMapping("limited-details/search")
-    public List<BookWithLimitedDetailsDTO> findDetailedBooks(
-            @RequestParam(required = false) Long authorId,
-            @RequestParam(required = false) String title) {
-        return bookService.findDetailedBooks(authorId, title);
+            @RequestParam(required = false) String title,
+            Pageable pageable) {
+        return bookService.findByAuthorAuthorIdAndTitleContainingIgnoreCase(authorId, title, pageable);
     }
 
+    @GetMapping("/limited-details/search")
+    public Page<BookWithLimitedDetailsDTO> findDetailedBooks(
+            @RequestParam(required = false) Long authorId,
+            @RequestParam(required = false) String title,
+            Pageable pageable) {
+        return bookService.findDetailedBooks(authorId, title, pageable);
+    }
 }
 
 

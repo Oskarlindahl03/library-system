@@ -1,16 +1,12 @@
-// src/main/java/com/example/library_system/Repository/BookRepository.java
 package com.example.library_system.Repository;
 
 import com.example.library_system.Entity.Books;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-@Repository
 public interface BookRepository extends JpaRepository<Books, Long> {
-    List<Books> findByAuthorAuthorIdAndTitleContainingIgnoreCase(Long authorId, String title);
-    List<Books> findByAuthorAuthorId(Long authorId);
-    List<Books> findByTitleContainingIgnoreCase(String title);
-    List<Books> findAll();
+    Page<Books> findByAuthorAuthorIdAndTitleContainingIgnoreCase(Long authorId, String title, Pageable pageable);
+    Page<Books> findByAuthorAuthorId(Long authorId, Pageable pageable);
+    Page<Books> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 }
