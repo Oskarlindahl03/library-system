@@ -25,4 +25,8 @@ public interface UserRepository extends JpaRepository<Users, Long> {
                        @Param("firstName") String firstName,
                        @Param("lastName") String lastName,
                        @Param("email") String email);
+
+    boolean existsByEmail(String email);
+
+    Users findByEmail(String email);
 }
