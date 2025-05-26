@@ -19,9 +19,14 @@ public class PostLoansController {
     private LoanService loanService;
 
     @PostMapping
-    public ResponseEntity<Loans> createLoan(@RequestBody LoanRequestDTO request) {
-        Loans createdLoan = loanService.createLoan(request.getUserId(), request.getBookId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdLoan);
+    public ResponseEntity<?> createLoan(@RequestBody LoanRequestDTO request) {
+        try {
+            Loans createdLoan = loanService.createLoan(request.getUserId(), request.getBookId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdLoan);
+        } catch (RuntimeException e) {
+            // Example: "User not found", "Book not found", or "No copies available"
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 

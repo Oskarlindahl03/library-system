@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/books")
 public class PostBooksController {
@@ -18,9 +20,14 @@ public class PostBooksController {
     public ResponseEntity<Books> createBook(@RequestBody Books book) {
         try {
             Books savedBook = bookService.createBook(book);
-            return ResponseEntity.ok(savedBook);
+
+            return ResponseEntity
+                    .created(URI.create("/books/" + savedBook.getBookId()))
+                    .body(savedBook);
+
         } catch (Exception e) {
             e.printStackTrace();
+            // 400 Bad Request if something went wrong (e.g. validation failed)
             return ResponseEntity.badRequest().build();
         }
     }

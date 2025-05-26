@@ -6,6 +6,7 @@ import com.example.library_system.Service.ServiceInterface.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +21,20 @@ public class GetBooksController {
     private BookService bookService;
 
     @GetMapping
-    public Page<Books> getAllBooks(Pageable pageable) {
-        return bookService.getAllBooks(pageable);
+    public ResponseEntity<Page<Books>> getAllBooks(Pageable pageable) {
+        Page<Books> books = bookService.getAllBooks(pageable);
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(books); // 200 OK
     }
-    @GetMapping("/limited-details")
-    public Page<BookWithLimitedDetailsDTO> getAllBooksWithLimitedDetails(Pageable pageable) {
-        return bookService.getAllBooksWithLimitedDetails(pageable);
+
+    @GetMapping("/detailed")
+    public ResponseEntity<Page<BookWithLimitedDetailsDTO>> getAllBooksWithLimitedDetails(Pageable pageable) {
+        Page<BookWithLimitedDetailsDTO> books = bookService.getAllBooksWithLimitedDetails(pageable);
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(books); // 200 OK
     }
 }

@@ -6,6 +6,7 @@ import com.example.library_system.Service.ServiceInterface.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,19 +22,31 @@ public class GetBooksSearchController {
     private BookService bookService;
 
     @GetMapping("/search")
-    public Page<Books> findByAuthorAuthorIdAndTitleContainingIgnoreCase(
+    public ResponseEntity<Page<Books>> findByAuthorAuthorIdAndTitleContainingIgnoreCase(
             @RequestParam(required = false) Long authorId,
             @RequestParam(required = false) String title,
             Pageable pageable) {
-        return bookService.findByAuthorAuthorIdAndTitleContainingIgnoreCase(authorId, title, pageable);
+
+        Page<Books> booksPage = bookService.findByAuthorAuthorIdAndTitleContainingIgnoreCase(authorId, title, pageable);
+
+        if (booksPage.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(booksPage); // 200 OK
     }
 
-    @GetMapping("/limited-details/search")
-    public Page<BookWithLimitedDetailsDTO> findDetailedBooks(
+    @GetMapping("/detailed/search")
+    public ResponseEntity<Page<BookWithLimitedDetailsDTO>> findDetailedBooks(
             @RequestParam(required = false) Long authorId,
             @RequestParam(required = false) String title,
             Pageable pageable) {
-        return bookService.findDetailedBooks(authorId, title, pageable);
+
+        Page<BookWithLimitedDetailsDTO> booksPage = bookService.findDetailedBooks(authorId, title, pageable);
+
+        if (booksPage.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(booksPage); // 200 OK
     }
 }
 
