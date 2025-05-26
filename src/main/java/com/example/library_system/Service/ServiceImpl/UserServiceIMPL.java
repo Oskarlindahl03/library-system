@@ -20,4 +20,25 @@ public class UserServiceIMPL implements UserService {
     public Users createUser(Users user){
         return userRepository.save(user);
     }
+    @Override
+    public List<Users> getAllUsers() {
+        List<Users> users = userRepository.findAllUsersCustom();
+
+        if(users == null || users.isEmpty()) {
+            throw new RuntimeException("No users found");
+        }
+
+        return users;
+    }
+    @Override
+    public boolean updateUserWithQuery(Long userId, Users user) {
+        int rowsUpdated = userRepository.updateUserById(
+                userId,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail()
+        );
+        return rowsUpdated > 0;
+    }
+
 }

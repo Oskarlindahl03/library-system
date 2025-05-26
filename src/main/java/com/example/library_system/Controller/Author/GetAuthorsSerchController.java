@@ -17,12 +17,10 @@ public class GetAuthorsSerchController {
     @GetMapping("/name/{lastName}")
     public ResponseEntity<List<Authors>> findByLastName(@PathVariable String lastName) {
         List<Authors> authors = authorService.findByLastName(lastName);
-
         if (authors.isEmpty()) {
-            return ResponseEntity.noContent().build();// 204 No Content
-        } else {
-            return ResponseEntity.ok(authors);// 200 OK
+            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(authors);
     }
 
 

@@ -20,7 +20,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Authors> findByLastName(String lastName) {
-        return authorRepository.findByLastName(lastName);
+        return authorRepository.findByLastNameContainingIgnoreCase(lastName);
     }
     @Override
     public Authors createAuthor(Authors author){
