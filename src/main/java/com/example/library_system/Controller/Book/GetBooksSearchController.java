@@ -1,5 +1,6 @@
 package com.example.library_system.Controller.Book;
 
+import com.example.library_system.Dto.BookWithLimitedDetailsDTO;
 import com.example.library_system.Entity.Books;
 import com.example.library_system.Service.ServiceInterface.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class GetBooksSearchController {
             @RequestParam(required = false) String title) {
         return bookService.findByAuthorAuthorIdAndTitleContainingIgnoreCase(authorId, title);
     }
+    @GetMapping("limited-details/search")
+    public List<BookWithLimitedDetailsDTO> findDetailedBooks(
+            @RequestParam(required = false) Long authorId,
+            @RequestParam(required = false) String title) {
+        return bookService.findDetailedBooks(authorId, title);
+    }
+
 }
 
 

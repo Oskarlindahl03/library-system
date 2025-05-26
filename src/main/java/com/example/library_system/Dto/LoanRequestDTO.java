@@ -1,6 +1,6 @@
 package com.example.library_system.Dto;
 
-public class LoanRequest {
+public class LoanRequestDTO {
     private Long userId;
     private Long bookId;
 

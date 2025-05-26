@@ -31,7 +31,7 @@ class LoanServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private LoanServiceImpl loanService;  // ← this must be the concrete class
+    private LoanServiceImpl loanService;
 
     @BeforeEach
     void setUp() {

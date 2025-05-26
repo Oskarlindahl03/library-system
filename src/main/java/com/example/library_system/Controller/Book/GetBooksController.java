@@ -1,5 +1,6 @@
 package com.example.library_system.Controller.Book;
 
+import com.example.library_system.Dto.BookWithLimitedDetailsDTO;
 import com.example.library_system.Entity.Books;
 import com.example.library_system.Service.ServiceInterface.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,12 @@ public class GetBooksController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Books> getAllBooks() {
         return bookService.getAllBooks();
+    }
+    @GetMapping("/limited-details")
+    public List<BookWithLimitedDetailsDTO> getAllBooksWithLimitedDetails() {
+        return bookService.getAllBooksWithLimitedDetails();
     }
 }

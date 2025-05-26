@@ -1,6 +1,6 @@
 package com.example.library_system.Controller;
 
-import com.example.library_system.Dto.LoanRequest;
+import com.example.library_system.Dto.LoanRequestDTO;
 import com.example.library_system.Entity.Books;
 import com.example.library_system.Entity.Users;
 import com.example.library_system.Repository.BookRepository;
@@ -36,7 +36,6 @@ class LoanControllerIntegrationTest {
 
     @Test
     void testCreateLoan() throws Exception {
-        // Create and save a user
         Users user = new Users();
         user.setFirstName("John");
         user.setLastName("Doe");
@@ -44,7 +43,6 @@ class LoanControllerIntegrationTest {
         user.setPassword("password");
         Users savedUser = userRepository.save(user);
 
-        // Create and save a book
         Books book = new Books();
         book.setTitle("Effective Java");
         book.setPublicationYear(2018);
@@ -52,12 +50,10 @@ class LoanControllerIntegrationTest {
         book.setTotalCopies(5);
         Books savedBook = bookRepository.save(book);
 
-        // Prepare loan request with saved entity IDs
-        LoanRequest request = new LoanRequest();
+        LoanRequestDTO request = new LoanRequestDTO();
         request.setUserId(savedUser.getUserId());
         request.setBookId(savedBook.getBookId());
 
-        // Perform POST and expect 201 Created
         mockMvc.perform(post("/loans")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(request)))
